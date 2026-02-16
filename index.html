@@ -137,13 +137,14 @@
         }
     }
 
-    /* Landing Screen - Enhanced */
+    /* Landing Screen - Enhanced Interactive */
     #landing {
         background: linear-gradient(180deg, rgba(90,107,79,0.95) 0%, rgba(90,107,79,1) 100%);
         flex-direction: column;
         text-align: center;
         position: relative;
         overflow: hidden;
+        cursor: crosshair;
     }
 
     #landing::after {
@@ -179,6 +180,15 @@
         border: 2px solid var(--faded-cream);
         border-radius: 8px;
         animation: monitorFade 12s ease-in-out infinite;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .monitor-ghost:hover {
+        opacity: 0.6 !important;
+        transform: scale(1.2) !important;
+        border-color: var(--muted-amber);
+        box-shadow: 0 0 30px var(--muted-amber);
     }
 
     .monitor-ghost:nth-child(1) {
@@ -210,11 +220,19 @@
         line-height: 1.8;
         position: relative;
         z-index: 2;
+        transition: transform 0.1s ease;
     }
 
     .glitch-text {
         position: relative;
         display: inline-block;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .glitch-text:hover {
+        transform: scale(1.1);
+        text-shadow: 0 0 20px var(--muted-amber);
     }
 
     .glitch-text::before,
@@ -238,6 +256,14 @@
         z-index: -2;
     }
 
+    .glitch-text:hover::before {
+        animation: glitch-1 0.3s infinite;
+    }
+
+    .glitch-text:hover::after {
+        animation: glitch-2 0.3s infinite;
+    }
+
     @keyframes glitch-1 {
         0%, 100% { transform: translate(0); opacity: 0; }
         20% { transform: translate(-2px, 2px); opacity: 0.8; }
@@ -254,6 +280,12 @@
         position: relative;
         width: 400px;
         margin: 0 auto;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+    .loading-container:hover {
+        transform: scale(1.05);
     }
 
     .loading-bar {
@@ -264,6 +296,13 @@
         position: relative;
         margin: 2rem auto;
         overflow: hidden;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .loading-bar:hover {
+        height: 6px;
+        box-shadow: 0 0 20px rgba(244, 239, 225, 0.5);
     }
 
     .loading-fill {
@@ -302,11 +341,14 @@
         z-index: 2;
         backdrop-filter: blur(10px);
         box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        transition: transform 0.3s ease;
+        transition: all 0.4s ease;
+        cursor: pointer;
     }
 
     .countdown-box:hover {
-        transform: translateY(-5px);
+        transform: translateY(-10px) scale(1.05);
+        box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+        border-color: var(--muted-amber);
     }
 
     .countdown-title {
@@ -332,6 +374,12 @@
         font-family: 'Inconsolata', monospace;
         letter-spacing: 0.1em;
         text-shadow: 0 0 30px rgba(244, 239, 225, 0.5);
+        transition: all 0.3s ease;
+    }
+
+    .countdown-box:hover .countdown-timer {
+        transform: scale(1.1);
+        text-shadow: 0 0 50px rgba(244, 239, 225, 0.9);
     }
 
     .countdown-name {
@@ -356,6 +404,13 @@
         opacity: 0.08;
         animation: staticFlicker 0.3s steps(3) infinite;
         filter: blur(2px);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .static-corner:hover {
+        opacity: 0.3 !important;
+        transform: scale(1.5);
     }
 
     .static-corner.top-left {
@@ -373,6 +428,20 @@
     @keyframes staticFlicker {
         0%, 100% { opacity: 0.05; transform: scale(1); }
         50% { opacity: 0.15; transform: scale(1.1); }
+    }
+
+    /* Mouse follower */
+    .cursor-glow {
+        position: fixed;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: radial-gradient(circle, var(--muted-amber), transparent);
+        pointer-events: none;
+        z-index: 9998;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        mix-blend-mode: screen;
     }
 
     /* Heated Rivalry Section - Redesigned */
@@ -934,7 +1003,7 @@
         to { transform: rotate(360deg); }
     }
 
-    /* Letter Section - Enhanced */
+    /* Letter Section - Interactive Scroll-Based */
     #letter {
         background: linear-gradient(135deg, #f4efe1 0%, #e8e3d5 100%);
         color: #2a2a2a;
@@ -987,6 +1056,14 @@
         letter-spacing: 0.05em;
         color: var(--moss-green);
         position: relative;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 1s ease;
+    }
+
+    .letter-title.reveal {
+        opacity: 1;
+        transform: translateY(0);
     }
 
     .letter-title::after {
@@ -995,9 +1072,14 @@
         bottom: -1rem;
         left: 50%;
         transform: translateX(-50%);
-        width: 100px;
+        width: 0;
         height: 2px;
         background: linear-gradient(90deg, transparent, var(--muted-amber), transparent);
+        transition: width 1s ease 0.5s;
+    }
+
+    .letter-title.reveal::after {
+        width: 100px;
     }
 
     .letter-text {
@@ -1009,10 +1091,27 @@
         z-index: 1;
     }
 
+    .letter-text .letter-word {
+        opacity: 0;
+        display: inline-block;
+        transform: translateY(20px);
+        transition: all 0.6s ease;
+    }
+
+    .letter-text .letter-word.reveal {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
     .letter-text .highlight {
-        background: linear-gradient(180deg, transparent 60%, rgba(212,165,116,0.25) 60%);
+        background: linear-gradient(180deg, transparent 60%, rgba(212,165,116,0) 60%);
         padding: 0 0.2rem;
         position: relative;
+        transition: all 0.8s ease;
+    }
+
+    .letter-text .highlight.reveal {
+        background: linear-gradient(180deg, transparent 60%, rgba(212,165,116,0.25) 60%);
     }
 
     .letter-text .underline-emotional {
@@ -1026,19 +1125,15 @@
         position: absolute;
         bottom: 0;
         left: 0;
-        width: 100%;
+        width: 0;
         height: 3px;
         background: linear-gradient(90deg, var(--muted-amber), var(--dusty-blue));
         opacity: 0.4;
-        transform: scaleX(0);
-        transform-origin: left;
-        animation: underlineGrow 1s ease forwards;
+        transition: width 1s ease;
     }
 
-    @keyframes underlineGrow {
-        to {
-            transform: scaleX(1);
-        }
+    .letter-text .underline-emotional.reveal::after {
+        width: 100%;
     }
 
     .cursor-blink {
@@ -1049,6 +1144,12 @@
         margin-left: 3px;
         animation: blink 1.2s step-end infinite;
         vertical-align: middle;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    .cursor-blink.reveal {
+        opacity: 1;
     }
 
     @keyframes blink {
@@ -1056,7 +1157,24 @@
         50% { opacity: 0; }
     }
 
-    /* Camera Section - Enhanced */
+    /* Scroll progress indicator for letter */
+    .letter-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--muted-amber), var(--dusty-blue));
+        z-index: 10000;
+        transition: width 0.1s ease;
+        opacity: 0;
+    }
+
+    #letter.visible .letter-progress {
+        opacity: 1;
+    }
+
+    /* Camera Section - Enhanced Interactive */
     #camera {
         background: linear-gradient(135deg, #3a4a3f 0%, var(--moss-green) 50%, #4a5a3f 100%);
         background-color: #4a5a3f; /* Fallback */
@@ -1093,11 +1211,19 @@
         max-width: 550px;
         position: relative;
         z-index: 2;
-        transition: transform 0.4s ease;
+        transition: all 0.4s ease;
+        cursor: pointer;
     }
 
     .camera-body:hover {
-        transform: translateY(-10px) scale(1.02);
+        transform: translateY(-15px) scale(1.03) rotateX(5deg);
+        box-shadow: 
+            0 40px 110px rgba(0,0,0,0.5),
+            0 15px 40px rgba(0,0,0,0.3);
+    }
+
+    .camera-body:active {
+        transform: translateY(-10px) scale(0.98);
     }
 
     .camera-screen {
@@ -1115,6 +1241,15 @@
         box-shadow: 
             inset 0 0 50px rgba(0,0,0,0.8),
             0 5px 20px rgba(0,0,0,0.5);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .camera-screen:hover {
+        border-color: var(--muted-amber);
+        box-shadow: 
+            inset 0 0 50px rgba(0,0,0,0.8),
+            0 5px 30px rgba(212,165,116,0.5);
     }
 
     .camera-screen::before {
@@ -1138,6 +1273,12 @@
         height: 100%;
         object-fit: cover;
         filter: contrast(1.1) saturate(1.1);
+        transition: all 0.3s ease;
+    }
+
+    .camera-screen:hover img {
+        filter: contrast(1.2) saturate(1.2) brightness(1.1);
+        transform: scale(1.05);
     }
 
     .placeholder-text {
@@ -1157,6 +1298,13 @@
         margin-top: 1.5rem;
         opacity: 0.8;
         letter-spacing: 0.05em;
+        transition: all 0.3s ease;
+    }
+
+    .camera-body:hover .file-name {
+        opacity: 1;
+        transform: translateY(-5px);
+        text-shadow: 0 0 10px rgba(244,239,225,0.5);
     }
 
     .battery-indicator {
@@ -1169,6 +1317,12 @@
         align-items: center;
         gap: 0.4rem;
         font-family: 'Inconsolata', monospace;
+        transition: all 0.3s ease;
+    }
+
+    .camera-body:hover .battery-indicator {
+        transform: scale(1.1);
+        color: #4CAF50;
     }
 
     .battery-icon {
@@ -1177,6 +1331,11 @@
         border: 2px solid #666;
         border-radius: 3px;
         position: relative;
+        transition: border-color 0.3s ease;
+    }
+
+    .camera-body:hover .battery-icon {
+        border-color: #4CAF50;
     }
 
     .battery-icon::after {
@@ -1188,6 +1347,11 @@
         height: 4px;
         background: #666;
         border-radius: 0 2px 2px 0;
+        transition: background 0.3s ease;
+    }
+
+    .camera-body:hover .battery-icon::after {
+        background: #4CAF50;
     }
 
     .battery-fill {
@@ -1214,6 +1378,13 @@
         opacity: 0;
         transform: translateY(20px);
         animation: captionFade 1s ease forwards 0.5s;
+        cursor: default;
+        transition: all 0.3s ease;
+    }
+
+    .camera-caption:hover {
+        transform: translateY(-5px);
+        text-shadow: 0 0 20px rgba(244,239,225,0.5);
     }
 
     @keyframes captionFade {
@@ -1221,6 +1392,57 @@
             opacity: 1;
             transform: translateY(0);
         }
+    }
+
+    /* Shutter button effect */
+    .shutter-btn {
+        position: absolute;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(145deg, #f0f0f0, #d0d0d0);
+        border: 3px solid #a0a0a0;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        z-index: 10;
+    }
+
+    .shutter-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    .shutter-btn:active {
+        transform: scale(0.95);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
+
+    .shutter-btn::before {
+        content: '📸';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.5rem;
+    }
+
+    @keyframes flashEffect {
+        0% { opacity: 0; }
+        50% { opacity: 1; background: white; }
+        100% { opacity: 0; }
+    }
+
+    .flash {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        animation: flashEffect 0.5s ease;
     }
 
     /* AI Laughter Section - Enhanced */
@@ -1486,7 +1708,7 @@
         50% { transform: translateY(-20px) rotate(180deg); }
     }
 
-    /* Playlist Section - Enhanced */
+    /* Playlist Section - Enhanced Interactive */
     #playlist {
         background: linear-gradient(135deg, #4a5a3f 0%, var(--moss-green) 50%, #3a4a3f 100%);
         background-color: #4a5a3f; /* Fallback */
@@ -1534,10 +1756,15 @@
     }
 
     .floppy-icon:hover {
-        transform: translateY(-15px) scale(1.05);
+        transform: translateY(-20px) scale(1.1) rotate(5deg);
         box-shadow: 
-            0 30px 80px rgba(0,0,0,0.6),
-            0 15px 40px rgba(0,0,0,0.4);
+            0 40px 100px rgba(0,0,0,0.6),
+            0 20px 50px rgba(0,0,0,0.4),
+            0 0 50px rgba(212,165,116,0.3);
+    }
+
+    .floppy-icon:active {
+        transform: translateY(-15px) scale(1.05) rotate(2deg);
     }
 
     .floppy-icon::before {
@@ -1550,6 +1777,12 @@
         background: linear-gradient(135deg, var(--dusty-blue), #6a8498);
         border-radius: 6px;
         box-shadow: inset 0 2px 5px rgba(0,0,0,0.3);
+        transition: all 0.3s ease;
+    }
+
+    .floppy-icon:hover::before {
+        background: linear-gradient(135deg, #8a9eb8, #7a94a8);
+        box-shadow: inset 0 2px 5px rgba(0,0,0,0.3), 0 0 20px rgba(122,148,168,0.5);
     }
 
     .floppy-icon::after {
@@ -1565,6 +1798,20 @@
         box-shadow: 
             inset 0 2px 5px rgba(0,0,0,0.5),
             0 2px 10px rgba(0,0,0,0.3);
+        transition: all 0.3s ease;
+    }
+
+    .floppy-icon:hover::after {
+        animation: vinylSpinFast 2s linear infinite;
+        box-shadow: 
+            inset 0 2px 5px rgba(0,0,0,0.5),
+            0 2px 10px rgba(0,0,0,0.3),
+            0 0 20px rgba(212,165,116,0.4);
+    }
+
+    @keyframes vinylSpinFast {
+        from { transform: translateX(-50%) rotate(0deg); }
+        to { transform: translateX(-50%) rotate(360deg); }
     }
 
     .playlist-label {
@@ -1574,6 +1821,12 @@
         letter-spacing: 0.08em;
         opacity: 0;
         animation: labelFade 1s ease forwards 0.5s;
+        transition: all 0.3s ease;
+    }
+
+    .floppy-container:hover .playlist-label {
+        transform: translateY(-5px);
+        text-shadow: 0 0 20px rgba(244,239,225,0.5);
     }
 
     @keyframes labelFade {
@@ -1596,6 +1849,44 @@
     .floppy-container:hover .playlist-hover {
         opacity: 0.9;
         bottom: -70px;
+    }
+
+    /* Music visualizer bars */
+    .music-viz {
+        position: absolute;
+        bottom: -100px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 5px;
+        opacity: 0;
+        transition: all 0.5s ease;
+    }
+
+    .floppy-container:hover .music-viz {
+        opacity: 1;
+        bottom: -120px;
+    }
+
+    .viz-bar {
+        width: 4px;
+        height: 30px;
+        background: linear-gradient(180deg, var(--muted-amber), var(--dusty-blue));
+        border-radius: 2px;
+        animation: vizDance 0.8s ease-in-out infinite;
+    }
+
+    .viz-bar:nth-child(1) { animation-delay: 0s; }
+    .viz-bar:nth-child(2) { animation-delay: 0.1s; }
+    .viz-bar:nth-child(3) { animation-delay: 0.2s; }
+    .viz-bar:nth-child(4) { animation-delay: 0.3s; }
+    .viz-bar:nth-child(5) { animation-delay: 0.4s; }
+    .viz-bar:nth-child(6) { animation-delay: 0.3s; }
+    .viz-bar:nth-child(7) { animation-delay: 0.2s; }
+
+    @keyframes vizDance {
+        0%, 100% { height: 15px; }
+        50% { height: 40px; }
     }
 
     /* Footer - Enhanced */
@@ -1803,25 +2094,27 @@
 
 </head>
 <body>
+    <div class="cursor-glow" id="cursorGlow"></div>
+    <div class="letter-progress" id="letterProgress"></div>
 
 ```
 <!-- Landing Screen -->
 <section id="landing" class="visible">
     <div class="particles" id="particles-landing"></div>
     <div class="crt-monitors">
-        <div class="monitor-ghost"></div>
-        <div class="monitor-ghost"></div>
-        <div class="monitor-ghost"></div>
+        <div class="monitor-ghost" onclick="glitchEffect(this)"></div>
+        <div class="monitor-ghost" onclick="glitchEffect(this)"></div>
+        <div class="monitor-ghost" onclick="glitchEffect(this)"></div>
     </div>
     <div class="static-corner top-left"></div>
     <div class="static-corner bottom-right"></div>
     
     <div class="landing-text typewriter">
-        <span class="glitch-text" data-text="crossing borders…">crossing borders…</span><br>
-        <span class="glitch-text" data-text="connection unstable.">connection unstable.</span>
+        <span class="glitch-text" data-text="crossing borders…" onclick="this.style.animation='none'; setTimeout(() => this.style.animation='', 10)">crossing borders…</span><br>
+        <span class="glitch-text" data-text="connection unstable." onclick="this.style.animation='none'; setTimeout(() => this.style.animation='', 10)">connection unstable.</span>
     </div>
 
-    <div class="loading-container">
+    <div class="loading-container" onclick="this.classList.add('clicked')">
         <div class="loading-bar">
             <div class="loading-fill"></div>
         </div>
@@ -2015,7 +2308,7 @@ You are ….<span class="cursor-blink"></span></div>
 ```
 <!-- Digital Camera Section -->
 <section id="camera">
-    <div class="camera-body">
+    <div class="camera-body" onclick="takePhoto()">
         <div class="battery-indicator">
             <div class="battery-icon">
                 <div class="battery-fill"></div>
@@ -2027,6 +2320,7 @@ You are ….<span class="cursor-blink"></span></div>
             <div class="placeholder-text" style="display: none;">[ Add image: ahmed-badbunny.jpg ]</div>
         </div>
         <div class="file-name">IMG_0218_BADBUNNY_ALT_REALITY.JPG</div>
+        <div class="shutter-btn" onclick="event.stopPropagation(); takePhoto()"></div>
     </div>
 
     <div class="camera-caption">
@@ -2096,6 +2390,15 @@ You are ….<span class="cursor-blink"></span></div>
             <div class="floppy-icon"></div>
             <div class="playlist-label">soundtrack of us.exe</div>
             <div class="playlist-hover">play when distance feels loud.</div>
+            <div class="music-viz">
+                <div class="viz-bar"></div>
+                <div class="viz-bar"></div>
+                <div class="viz-bar"></div>
+                <div class="viz-bar"></div>
+                <div class="viz-bar"></div>
+                <div class="viz-bar"></div>
+                <div class="viz-bar"></div>
+            </div>
         </a>
     </div>
 </section>
@@ -2106,12 +2409,50 @@ You are ….<span class="cursor-blink"></span></div>
         You should know exactly who your real friends are , they are the ones with matching scars
     </div>
     <div class="footer-attribution">
-        Taylor swift <span class="crossed-out">canceled</span>
+        Taylor swift <span class="crossed-out">Cancelled</span>
         <span class="silhouette-icon"></span>
     </div>
 </footer>
 
 <script>
+    // Cursor glow follower
+    const cursorGlow = document.getElementById('cursorGlow');
+    let mouseX = 0, mouseY = 0;
+    
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function animateCursor() {
+        cursorGlow.style.left = mouseX + 'px';
+        cursorGlow.style.top = mouseY + 'px';
+        requestAnimationFrame(animateCursor);
+    }
+
+    // Show cursor glow on landing section
+    document.getElementById('landing').addEventListener('mouseenter', () => {
+        cursorGlow.style.opacity = '0.6';
+    });
+
+    document.getElementById('landing').addEventListener('mouseleave', () => {
+        cursorGlow.style.opacity = '0';
+    });
+
+    animateCursor();
+
+    // Glitch effect for monitors
+    function glitchEffect(element) {
+        element.style.animation = 'none';
+        element.style.borderColor = 'var(--muted-amber)';
+        element.style.boxShadow = '0 0 50px var(--muted-amber)';
+        setTimeout(() => {
+            element.style.animation = '';
+            element.style.borderColor = '';
+            element.style.boxShadow = '';
+        }, 300);
+    }
+
     // Particle System
     function createParticles(containerId, count) {
         const container = document.getElementById(containerId);
@@ -2151,6 +2492,90 @@ You are ….<span class="cursor-blink"></span></div>
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
+    // Letter scroll-based reveal
+    const letterSection = document.getElementById('letter');
+    const letterProgress = document.getElementById('letterProgress');
+    
+    function revealLetterOnScroll() {
+        if (!letterSection) return;
+        
+        const sectionTop = letterSection.offsetTop;
+        const sectionHeight = letterSection.offsetHeight;
+        const scrollPos = window.scrollY;
+        const windowHeight = window.innerHeight;
+        
+        // Check if letter section is in view
+        if (scrollPos + windowHeight > sectionTop && scrollPos < sectionTop + sectionHeight) {
+            const progress = (scrollPos + windowHeight - sectionTop) / (sectionHeight + windowHeight);
+            const clampedProgress = Math.max(0, Math.min(1, progress));
+            
+            // Update progress bar
+            letterProgress.style.width = (clampedProgress * 100) + '%';
+            
+            // Reveal title
+            const title = letterSection.querySelector('.letter-title');
+            if (title && clampedProgress > 0.1) {
+                title.classList.add('reveal');
+            }
+            
+            // Reveal words progressively
+            const letterText = letterSection.querySelector('.letter-text');
+            if (letterText) {
+                const words = letterText.textContent.split(/\s+/);
+                const totalWords = words.length;
+                const wordsToReveal = Math.floor(clampedProgress * totalWords);
+                
+                // Wrap words if not already wrapped
+                if (!letterText.querySelector('.letter-word')) {
+                    letterText.innerHTML = words.map(word => 
+                        `<span class="letter-word">${word}</span>`
+                    ).join(' ');
+                }
+                
+                // Reveal words based on scroll
+                const wordElements = letterText.querySelectorAll('.letter-word');
+                wordElements.forEach((word, index) => {
+                    if (index < wordsToReveal) {
+                        setTimeout(() => {
+                            word.classList.add('reveal');
+                        }, index * 5);
+                    }
+                });
+            }
+            
+            // Reveal highlights and underlines
+            if (clampedProgress > 0.5) {
+                letterSection.querySelectorAll('.highlight').forEach(el => el.classList.add('reveal'));
+            }
+            
+            if (clampedProgress > 0.7) {
+                letterSection.querySelectorAll('.underline-emotional').forEach(el => el.classList.add('reveal'));
+            }
+            
+            if (clampedProgress > 0.9) {
+                const cursor = letterSection.querySelector('.cursor-blink');
+                if (cursor) cursor.classList.add('reveal');
+            }
+        }
+    }
+
+    // Camera flash effect
+    function takePhoto() {
+        const cameraBody = document.querySelector('.camera-body');
+        const flash = document.createElement('div');
+        flash.className = 'flash';
+        cameraBody.appendChild(flash);
+        
+        // Haptic feedback (if available)
+        if (navigator.vibrate) {
+            navigator.vibrate(50);
+        }
+        
+        setTimeout(() => {
+            flash.remove();
+        }, 500);
+    }
+
     // Scroll Animations
     const observerOptions = {
         threshold: 0.2,
@@ -2169,6 +2594,23 @@ You are ….<span class="cursor-blink"></span></div>
         observer.observe(section);
     });
 
+    // Add scroll listener for letter reveal
+    window.addEventListener('scroll', () => {
+        revealLetterOnScroll();
+        
+        // Parallax effect for some sections
+        const scrolled = window.pageYOffset;
+        const parallaxElements = document.querySelectorAll('.map-container, .globe-container');
+        
+        parallaxElements.forEach(el => {
+            const speed = 0.3;
+            const yPos = -(scrolled * speed);
+            if (el.getBoundingClientRect().top < window.innerHeight && el.getBoundingClientRect().bottom > 0) {
+                el.style.transform = `translateY(${yPos}px)`;
+            }
+        });
+    });
+
     // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -2180,19 +2622,51 @@ You are ….<span class="cursor-blink"></span></div>
         });
     });
 
-    // Parallax effect for some sections
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        const parallaxElements = document.querySelectorAll('.map-container, .camera-body');
+    // Landing section mouse parallax
+    const landingSection = document.getElementById('landing');
+    landingSection.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 20;
+        const y = (e.clientY / window.innerHeight - 0.5) * 20;
         
-        parallaxElements.forEach(el => {
-            const speed = 0.3;
-            const yPos = -(scrolled * speed);
-            if (el.getBoundingClientRect().top < window.innerHeight && el.getBoundingClientRect().bottom > 0) {
-                el.style.transform = `translateY(${yPos}px)`;
+        const landingText = landingSection.querySelector('.landing-text');
+        if (landingText) {
+            landingText.style.transform = `translate(${x}px, ${y}px)`;
+        }
+        
+        const countdownBox = landingSection.querySelector('.countdown-box');
+        if (countdownBox) {
+            countdownBox.style.transform = `translate(${x * 0.5}px, ${y * 0.5}px)`;
+        }
+    });
+
+    // Initialize letter reveal on load if already scrolled
+    window.addEventListener('load', () => {
+        revealLetterOnScroll();
+    });
+
+    // Add keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+        // Space bar to take photo when camera section is in view
+        if (e.code === 'Space') {
+            const cameraSection = document.getElementById('camera');
+            const rect = cameraSection.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                e.preventDefault();
+                takePhoto();
             }
+        }
+    });
+
+    // Add click sound effect (optional - can be removed if annoying)
+    document.querySelectorAll('.rivalry-card, .destination-pin, .floppy-icon').forEach(el => {
+        el.addEventListener('click', () => {
+            // Visual feedback only (no sound)
+            el.style.transform = el.style.transform || '';
         });
     });
+
+    console.log('🎉 Crossing Lines - Interactive Birthday Experience Loaded');
+    console.log('✨ Special birthday message for Ahmed turning 18');
 </script>
 ```
 
