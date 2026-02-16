@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crossing Lines | Ahmed 18</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Courier+Prime&family=Special+Elite&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --moss-green: #4A5D45;
+            --faded-cream: #F2F0E4;
+            --dusty-blue: #6B8CA3;
+            --muted-amber: #C99E68;
+            --text-dark: #2A2A2A;
+        }
+
+        body {
+            background-color: var(--moss-green);
+            color: var(--faded-cream);
+            font-family: 'Cormorant Garamond', serif;
+            overflow-x: hidden;
+            cursor: crosshair;
+        }
+
+        /* Typography Classes */
+        .font-typewriter { font-family: 'Courier Prime', monospace; }
+        .font-hand { font-family: 'Cedarville Cursive', cursive; }
+        .font-rough { font-family: 'Special Elite', cursive; }
+
+        /* ----------------------- 
+           Cinematic Effects 
+           ----------------------- */
+        
+        /* Film Grain Overlay */
+        .film-grain {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.12;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            animation: grain-shift 1s steps(4) infinite;
+        }
+
+        @keyframes grain-shift {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-5px, -5px); }
+        }
+
+        /* CRT Scanlines */
+        .scanlines {
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+            background-size: 100% 4px;
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Soft Glow / Golden Hour */
+        .golden-glow {
+            text-shadow: 0 0 8px rgba(201, 158, 104, 0.4);
+        }
+
+        /* Blinking Cursor */
+        .cursor-blink::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* ----------------------- 
+           Specific Section Styles 
+           ----------------------- */
+
+        /* Loading Bar */
+        .loading-container {
+            width: 200px;
+            height: 2px;
+            background: rgba(242, 240, 228, 0.2);
+            margin: 10px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        .loading-bar {
+            height: 100%;
+            background: var(--faded-cream);
+            width: 0%;
+            animation: load 3s ease-in-out forwards;
+        }
+        @keyframes load { 0% { width: 0%; } 100% { width: 100%; } }
+
+        /* Hockey Rink Lines */
+        .rink-line {
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        /* Map Tooltip */
+        .map-point:hover .tooltip {
+            opacity: 1;
+            transform: translateY(-10px);
+        }
+
+        /* Windows 98 Style */
+        .win98-window {
+            background: #c0c0c0;
+            border-top: 2px solid #fff;
+            border-left: 2px solid #fff;
+            border-right: 2px solid #404040;
+            border-bottom: 2px solid #404040;
+            box-shadow: 1px 1px 0 black;
+        }
+        .win98-title {
+            background: linear-gradient(90deg, #000080, #1084d0);
+        }
+
+        /* Ivy Animation */
+        .ivy-creep {
+            background-image: linear-gradient(to top, var(--moss-green) 10%, transparent), 
+                              repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(40, 60, 40, 0.3) 10px, rgba(40, 60, 40, 0.3) 12px);
+            height: 100px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            mask-image: linear-gradient(to top, black, transparent);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#C99E68] selection:text-[#4A5D45]">
+
+    <div class="film-grain"></div>
+
+    <section class="h-screen flex flex-col items-center justify-center relative overflow-hidden p-6 text-center">
+        <div class="absolute inset-0 opacity-10 flex justify-center items-center pointer-events-none">
+            <div class="w-64 h-48 border-2 border-cream rounded transform rotate-3 animate-pulse"></div>
+            <div class="w-64 h-48 border-2 border-cream rounded transform -rotate-6 absolute -ml-12 mt-12"></div>
+        </div>
+
+        <div class="relative z-20 space-y-6">
+            <h1 class="font-typewriter text-xl md:text-2xl tracking-widest opacity-80">
+                crossing borders…<br>
+                connection unstable.
+            </h1>
+
+            <div>
+                <div class="loading-container">
+                    <div class="loading-bar"></div>
+                </div>
+                <p class="font-typewriter text-xs opacity-60 mt-2">processing birthday feelings…</p>
+            </div>
+
+            <div class="mt-12 space-y-2">
+                <div class="font-rough text-lg text-[#C99E68]">February 18, 2026</div>
+                <div class="font-light text-4xl md:text-6xl tracking-tighter golden-glow" id="countdown">Ahmed</div>
+                <div class="font-light text-xl">turning 18</div>
+                <div class="font-typewriter text-xs tracking-widest uppercase border-t border-[#F2F0E4]/30 pt-4 mt-4 inline-block px-8">
+                    18 February 2026
+                </div>
+            </div>
+
+            <p class="text-xs opacity-50 absolute bottom-12 left-0 right-0">from Spidey</p>
+        </div>
+        
+        <div class="absolute top-0 left-0 w-32 h-32 bg-white opacity-5 rounded-full blur-3xl animate-pulse"></div>
+    </section>
+
+    <section class="min-h-screen flex flex-col md:flex-row relative">
+        <div class="w-full md:w-1/2 bg-[#C99E68]/20 flex items-center justify-center relative p-8 border-b md:border-b-0 md:border-r border-[#F2F0E4]/10">
+            <div class="absolute top-4 left-4 font-typewriter text-xs uppercase tracking-widest opacity-70">Canada Draft</div>
+            <div class="rink-line w-64 h-64 border-l-0 rounded-r-none absolute right-0 opacity-20"></div>
+        </div>
+
+        <div class="w-full md:w-1/2 bg-[#6B8CA3]/20 flex items-center justify-center relative p-8">
+            <div class="absolute top-4 right-4 font-typewriter text-xs uppercase tracking-widest opacity-70">Russia Draft</div>
+             <div class="rink-line w-64 h-64 border-r-0 rounded-l-none absolute left-0 opacity-20"></div>
+        </div>
+
+        <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10 text-center px-4">
+            <div class="space-y-4 golden-glow bg-[#4A5D45]/80 p-8 backdrop-blur-sm rounded-sm border border-[#F2F0E4]/10">
+                <p class="font-light text-xl md:text-2xl italic">competition builds pressure.</p>
+                <p class="font-light text-xl md:text-2xl italic">distance builds tension.</p>
+                <p class="font-light text-xl md:text-2xl italic text-[#C99E68]">loyalty decides who wins.</p>
+            </div>
+            
+            <div class="absolute bottom-8 font-rough text-sm tracking-widest uppercase">
+                Canada wins.
+            </div>
+            
+            <div class="absolute bottom-4 right-4 w-4 h-2 bg-black rounded-full opacity-40"></div>
+        </div>
+    </section>
+
+    <section class="min-h-[80vh] bg-[#6B8CA3]/10 relative flex flex-col items-center justify-center p-8 overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="w-full h-full stroke-current fill-none">
+                <path d="M10,80 Q50,20 90,30" stroke-width="0.5" stroke-dasharray="2,2" />
+            </svg>
+        </div>
+
+        <div class="relative z-10 text-center space-y-6 max-w-2xl">
+            <div class="flex justify-center space-x-12 mb-8 text-2xl">
+                <span>🇨🇦</span>
+                <span class="text-[#F2F0E4]/30">--------></span>
+                <span>🇺🇸</span>
+            </div>
+
+            <p class="font-light text-lg md:text-xl leading-relaxed">
+                some people move for opportunity.<br>
+                some people move for growth.<br>
+                <span class="italic opacity-70">some people don’t realize what they’re leaving behind.</span><br>
+                <br>
+                <span class="text-[#C99E68] text-2xl font-normal">but you’re moving to heal and explore.</span>
+            </p>
+
+            <div class="map-point inline-block relative cursor-help mt-8">
+                <span class="font-typewriter text-xs border border-[#F2F0E4]/40 px-2 py-1 rounded hover:bg-[#F2F0E4] hover:text-[#4A5D45] transition-colors">
+                    [ status check ]
+                </span>
+                <div class="tooltip absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-[#6B8CA3] text-white text-xs rounded opacity-0 transition-all duration-500 whitespace-nowrap shadow-lg">
+                    international roaming enabled.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-4 md:px-0 bg-[#F2F0E4] text-[#2A2A2A]">
+        <div class="max-w-3xl mx-auto relative">
+            
+            <div class="mb-12 text-center">
+                <h2 class="font-hand text-4xl text-[#C99E68]">Open When You’re Ready</h2>
+                <div class="w-16 h-1 bg-[#C99E68]/30 mx-auto mt-2"></div>
+            </div>
+
+            <div class="font-typewriter text-sm md:text-base leading-relaxed space-y-6 p-6 md:p-10 border border-gray-300 shadow-sm relative bg-white bg-opacity-50">
+                <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: url('https://www.transparenttextures.com/patterns/crumpled-paper.png');"></div>
+
+                <p>Heyyy Ahmed ! First happy birthday I love you so fucking much in the past few months I feel like we became so much closer I really enjoy spending time with you ( not in your car tho 🚗 cuz you are the worst person in the Bluetooth either skipping mid song or playing black ppl songs ) .</p>
+
+                <p>You are 18 now ! I know it’s cringe and stupid but “YOU ARE LEAGIL NOW” like you haven’t been fucked before, now you are in a new level of your life I would call it <span class="border-b border-black border-dashed">independency?</span> Now it’s your turn to shape your future every single decision you make will affect you all your life you are not a kid any more you are a man .</p>
+
+                <p>I know it could be hard to take but hopefully you do a great job with it , you have one of the widest hearts you help everyone and not selfish at all I like that in you and I hope you never change that in you also you care about everyone .</p>
+
+                <p>Some people don’t care about break ups and by some I mean me , sorry for not being there for you when you needed someone but i can’t deal with emotions I’m more of a funny guy I joke to make things better , but I want you to know that you are strong and I hope you can get over him i can’t give you advice because we have different levels of tolerance but what I can say is he is a fucking straight guy who likes little boys and white ppl somehow you made him like you a bit but still he wanted you to be white but whatever <span class="font-hand text-lg text-[#6B8CA3]">you gave him your light and he gave you his darkness.</span></p>
+
+                <p>My life did not start before meeting you well no it did but I did not enjoy life before you I remember the first day I saw you it was Friday you were waving at me from so far I was near Nahdi 📍 you came and wanted smth from Nahdi then canceled we went to the haunted house 👻 then walked to comma and your jaw locked then your mom picked us up .</p>
+
+                <p>I really enjoyed walking with you everyday eating ice cream 🍦 and pizza 🍕 and pasta 🍝 you did make me lose ~700 Ryals but it was worth it</p>
+
+                <p>I remember my euphoria era and everytime I listen to specific songs i remember those days I’ll list some here 🎵</p>
+
+                <ul class="list-none pl-4 space-y-1 italic text-gray-600">
+                    <li>I love you - Billie eilish</li>
+                    <li>Never been so alone - labyrinth and Billie Elish</li>
+                    <li>Gorgeous - Taylor swift</li>
+                </ul>
+
+                <p>And a lot more</p>
+
+                <p>You’re not just my friend</p>
+
+                <p>You are ….<span class="cursor-blink"></span></p>
+            </div>
+        </div>
+    </section>
+
+    <section class="min-h-screen bg-[#111] text-white flex flex-col items-center justify-center p-4">
+        <div class="border-4 border-gray-400 rounded-lg p-2 max-w-lg w-full bg-black shadow-2xl relative">
+            <div class="flex justify-between items-center mb-2 px-2 text-green-400 font-mono text-xs">
+                <span>ISO 800</span>
+                <div class="flex items-center gap-1">
+                    <span>87%</span>
+                    <div class="w-4 h-2 border border-green-400 relative"><div class="absolute left-0 top-0 bottom-0 bg-green-400 w-3/4"></div></div>
+                </div>
+            </div>
+
+            <div class="aspect-[4/3] bg-gray-800 relative overflow-hidden flex items-center justify-center group">
+                <div class="text-center opacity-50">
+                    <p class="font-bold text-4xl mb-2">👾</p>
+                    <p class="font-mono text-xs">[ INSERT AI PHOTO OF HIM + BAD BUNNY ]</p>
+                </div>
+                
+                <div class="absolute top-4 right-4 w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                <div class="absolute inset-0 grid grid-cols-3 grid-rows-3 pointer-events-none">
+                    <div class="border-r border-white/20"></div>
+                    <div class="border-r border-white/20"></div>
+                    <div class="border-b border-white/20 col-span-3 row-start-1"></div>
+                    <div class="border-b border-white/20 col-span-3 row-start-2"></div>
+                </div>
+            </div>
+
+            <div class="mt-2 text-center">
+                <p class="font-mono text-xs text-gray-400">IMG_0218_BADBUNNY_ALT_REALITY.JPG</p>
+            </div>
+        </div>
+
+        <div class="mt-8 text-center space-y-2">
+            <h3 class="font-rough text-xl">alternate timeline.</h3>
+            <p class="font-typewriter text-sm opacity-60">world tour loading…</p>
+        </div>
+    </section>
+
+    <section class="py-20 bg-[#6B8CA3]/30 flex items-center justify-center">
+        <div class="win98-window p-1 w-80 shadow-xl">
+            <div class="win98-title text-white font-bold px-2 py-1 text-sm flex justify-between items-center">
+                <span>Ai laughter</span>
+                <div class="flex gap-1">
+                    <div class="w-4 h-4 bg-[#c0c0c0] border-2 border-white border-b-black border-r-black flex items-center justify-center text-black text-xs leading-none">_</div>
+                    <div class="w-4 h-4 bg-[#c0c0c0] border-2 border-white border-b-black border-r-black flex items-center justify-center text-black text-xs leading-none">X</div>
+                </div>
+            </div>
+            
+            <div class="bg-white p-4 h-64 flex flex-col items-center justify-center text-center">
+                <div class="w-32 h-32 bg-gray-200 border border-gray-400 mb-4 flex items-center justify-center">
+                    <span class="text-3xl grayscale opacity-50">👤</span>
+                </div>
+                
+                <p class="font-typewriter text-sm text-black">part of the storyline.</p>
+                <p class="font-typewriter text-sm text-black mb-4">not the final chapter.</p>
+                
+                <p class="font-sans text-[10px] text-gray-500 mt-auto w-full text-left border-t border-gray-300 pt-2">
+                    ⚠ file cannot be reopened without consequences.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="h-64 relative bg-[#4A5D45] flex items-center justify-center text-center px-4 overflow-hidden">
+        <div class="relative z-10">
+            <p class="font-light text-xl md:text-2xl text-[#F2F0E4]">
+                no matter which country you land in,<br>
+                you don’t outgrow people<br>
+                <span class="text-[#C99E68]">who grew with you.</span>
+            </p>
+        </div>
+        <div class="ivy-creep"></div>
+    </section>
+
+    <section class="py-20 bg-[#3a4a36] relative overflow-hidden text-center">
+        <div class="absolute inset-0 opacity-5" style="background-image: repeating-linear-gradient(90deg, transparent, transparent 49px, #fff 50px);"></div>
+        
+        <div class="relative z-10 space-y-4">
+            <p class="font-rough text-2xl opacity-80">we compete.</p>
+            <p class="font-rough text-2xl opacity-80">we argue.</p>
+            <p class="font-rough text-2xl opacity-80">we even bite.</p>
+            <p class="font-hand text-3xl text-[#C99E68] mt-4">but we don’t hate.</p>
+        </div>
+
+        <div class="absolute bottom-4 right-4 w-6 h-3 bg-black rounded-full opacity-30"></div>
+    </section>
+
+    <section class="py-12 flex flex-col items-center justify-center">
+        <a href="https://open.spotify.com/playlist/24n5eF0wKlTQ1VHYRIiHPA?si=eiaTx-V8RM6ucUbOB0RMyQ&pi=brXqQgEnT3eao" target="_blank" class="group flex flex-col items-center cursor-pointer transition-transform hover:scale-105">
+            <div class="w-16 h-16 bg-[#2A2A2A] rounded p-2 relative shadow-lg">
+                <div class="w-full h-8 bg-gray-400 rounded-sm"></div>
+                <div class="absolute bottom-0 right-2 w-10 h-6 bg-gray-300 rounded-t-sm"></div>
+            </div>
+            
+            <div class="mt-4 font-typewriter text-sm group-hover:text-[#C99E68] transition-colors">
+                soundtrack of us.exe
+            </div>
+            
+            <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-xs mt-2 italic text-[#6B8CA3]">
+                play when distance feels loud.
+            </div>
+        </a>
+    </section>
+
+    <footer class="bg-[#F2F0E4] py-12 text-center text-[#2A2A2A] relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5" style="background: repeating-linear-gradient(45deg, #000 0, #000 1px, transparent 0, transparent 50%); background-size: 4px 4px;"></div>
+        
+        <div class="relative z-10 px-6">
+            <p class="font-typewriter text-sm max-w-md mx-auto leading-loose">
+                “You should know exactly who your real friends are , they are the ones with matching scars “
+            </p>
+            
+            <div class="mt-4 flex items-center justify-center gap-2 opacity-50">
+                <span class="font-rough text-xs line-through decoration-red-500">Taylor swift canceled</span>
+                <div class="w-4 h-4 bg-gray-400 rounded-full overflow-hidden relative grayscale">
+                    <div class="absolute top-0 right-0 w-full h-full bg-red-500 opacity-30 transform rotate-45"></div>
+                    <div class="absolute top-0 left-0 w-full h-full bg-red-500 opacity-30 transform -rotate-45"></div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple script to handle logic if needed (currently purely visual/CSS driven)
+        console.log("Crossing Lines... Connection Established.");
+    </script>
+</body>
+</html>
